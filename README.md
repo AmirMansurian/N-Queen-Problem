@@ -9,12 +9,12 @@
 Open a command window at the top level of the directory where you installed OR-Tools, and enter:
 
 ```sh
-$ make run SOURCE= relative path/ N-Queens.cc
+$ make run SOURCE= relative path/ program.cc
 ```
 This will Create executable file in bin directory. so for running:
 
 
 ```sh
 $ cd bin
-$ ./N-Queens
+$ ./program
 ```
