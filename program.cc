@@ -12,7 +12,7 @@ void RunConstraintProgrammingExample() {
   Solver solver("N-QueenSolver");
   
   ///////////////////////////////////////////////////////////////////////////////////////////
-  const int64 numVals = 8; // Enter Number Of Queens Here
+  const int64 numVals = 4; // Enter Number Of Queens Here
   //////////////////////////////////////////////////////////////////////////////////////////
 
   std::vector<IntVar*> Queens;
@@ -23,7 +23,7 @@ void RunConstraintProgrammingExample() {
   	Queens.push_back(x);
   }
    
-  solver.AddConstraint(solver.MakeAllDifferent(Queens));
+  solver.AddConstraint(solver.MakeAllDifferent(Queens));	// alldifferent costraint for row attacks
   
 
   vector<IntVar*> vars(numVals);
@@ -34,7 +34,7 @@ void RunConstraintProgrammingExample() {
   	vars2[i] = solver.MakeSum(Queens[i], -i)->Var();
   }
   
-  solver.AddConstraint(solver.MakeAllDifferent(vars));
+  solver.AddConstraint(solver.MakeAllDifferent(vars));		// alldifferent constrints for diagonal attacks
   solver.AddConstraint(solver.MakeAllDifferent(vars2));
 
 
@@ -45,7 +45,20 @@ void RunConstraintProgrammingExample() {
   while (solver.NextSolution()){
     
     for (int i=0; i<numVals; i++)
-    	LOG(INFO) <<  Queens.at(i) -> Value() <<"\n";
+    	cout<< "Row Of Queen " << to_string(i)<< " : " <<Queens.at(i) -> Value() <<"\n";
+  	
+  	for (int m=0; m<numVals; m++)
+    	{
+    		for (int n=0; n<numVals; n++)
+    		{
+    			if (Queens.at(m) -> Value() == n+1)
+    				cout<< "X ";
+    			else
+    				cout<< ". ";
+    		}
+    		cout<<endl;
+    	}	
+  	
     	break;
   }
   solver.EndSearch();
